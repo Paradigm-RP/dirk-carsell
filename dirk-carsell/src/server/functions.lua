@@ -3,7 +3,7 @@ RegisterNetEvent("CarSell:Sell", function(site,p)
 	local ply = QBCore.Functions.GetPlayer(src)
 
 	local cid = ply.PlayerData.citizenid
-	if not Config.CarSellSpots[site].AuthorizedIDs or Config.CarSellSpots[site].AuthorizedIDs[cid] then
+	if not Config.CarSellSpots[site].AuthorizedIDs or Config.CarSellSpots[site].AuthorizedIDs[cid] or Config.BlacklistedModels[GetEntityModel(veh)] then
 		local result = MySQL.query.await('SELECT * from player_vehicles WHERE plate = ?', {p})
 		print(json.encode(result, {indent = true}))
 		if result[1] and result[1].citizenid == cid then 
